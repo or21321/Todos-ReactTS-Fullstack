@@ -1,0 +1,21 @@
+.login-page {
+    margin-top: 25px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 0 auto;
+        width: 60%;
+
+        input {
+            padding: 5px;
+        }
+
+        button {
+            width: fit-content;
+        }
+    }
+}

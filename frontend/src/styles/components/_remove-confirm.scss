@@ -1,0 +1,22 @@
+.remove-confirm {
+    z-index: 1;
+
+    .extra-confirm-msg:hover {
+        cursor: pointer;
+    }
+
+    .extra-confirm {
+        // background-color: #ffffff;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 110%);
+        background-color: $clr1;
+        padding: 20px;
+        border-radius: 3px;
+    }
+
+    .wrapped-modal {
+        background-color: $clr2;
+    }
+}

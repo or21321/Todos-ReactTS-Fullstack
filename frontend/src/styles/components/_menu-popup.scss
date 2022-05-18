@@ -1,0 +1,50 @@
+.menu-popup {
+    background-color: $clr1;
+    width: fit-content;
+    margin-top: 10px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 10px;
+    cursor: default;
+    max-width: 80%;
+
+    // &.open {
+    //     position: absolute;
+    //     bottom: 10px;
+    // }
+
+    div {
+        // padding: 5px 15px;
+
+        > *:not(.popup-close-btn) {
+            margin: 7.5px 35px;
+        }
+
+        .popup-close-btn {
+            // position: absolute;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        header {
+            color: $clr3;
+            font-size: em(18px);
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+        }
+
+        ul {
+            color: $clr5;
+
+            > *:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
