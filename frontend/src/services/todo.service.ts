@@ -77,6 +77,8 @@ const TODOS: Todos = [
     },
 ]
 
+const ENDPOINT = 'todo/'
+
 const KEY = 'todoDb';
 
 export const todoService = {
@@ -89,29 +91,39 @@ export const todoService = {
 }
 
 async function toggleTodo(id: string) {
+    // Could be better with a specific route on server / getting todo as a parameter here
     const todo = await getById(id)
     todo.isDone = !todo.isDone
     return await save(todo)
 }
 
 async function query(): Promise<Todo[] | undefined> {
-    // if (!storageService.load(KEY)) storageService.store(KEY, TODOS)
-    // return asyncStorageService.query(KEY)
-    return await httpService.get('todo/')
-}
-
-function getById(id: string): Promise<Todo | undefined> {
-    return asyncStorageService.get(KEY, id)
-}
-
-function remove(id: string) {
-    return asyncStorageService.remove(KEY, id)
-}
-
-function save(todo: Todo): Promise<Todo> {
     try {
-        const prm = (todo._id) ? asyncStorageService.put(KEY, todo) : asyncStorageService.post(KEY, todo)
-        return prm
+        return await httpService.get(ENDPOINT)
+        // if (!storageService.load(KEY)) storageService.store(KEY, TODOS)
+        // return asyncStorageService.query(KEY)
+    } catch (err) {
+        console.log(err);
+
+    }
+}
+
+async function getById(id: string): Promise<Todo | undefined> {
+    // return asyncStorageService.get(KEY, id)
+    return await httpService.get(`${ENDPOINT}/${id}`)
+}
+
+async function remove(id: string) {
+    // return asyncStorageService.remove(KEY, id)
+    return await httpService.delete(`${ENDPOINT}/${id}`)
+}
+
+async function save(todo: Todo): Promise<Todo> {
+    console.log('todo', todo);
+    try {
+        return todo._id ? await httpService.put(ENDPOINT, todo) : await httpService.post(ENDPOINT, todo)
+        // const prm = (todo._id) ? asyncStorageService.put(KEY, todo) : asyncStorageService.post(KEY, todo)
+        // return prm
     } catch (err) {
         console.log(err);
         throw err
@@ -121,7 +133,6 @@ function save(todo: Todo): Promise<Todo> {
 function getEmptyTodo(): Promise<Todo> {
     return new Promise((res, rej) => {
         res({
-            _id: '',
             createdAt: 0,
             content: '',
             isDone: false,

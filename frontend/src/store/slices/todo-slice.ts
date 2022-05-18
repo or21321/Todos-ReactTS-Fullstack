@@ -71,11 +71,13 @@ export const todoSlice = createSlice({
             if (idx !== -1) state.todos.splice(idx, 1)
         })
         builder.addCase(saveTodo.fulfilled, (state, action) => {
+            console.log('action.payload',action.payload);
+            
             const todo = action.payload
             const idx = state.todos.findIndex(t => t._id === todo._id)
             if (idx !== -1) state.todos.splice(idx, 1, todo)
             else if (state.todos.length >= 10) throw Error('Maximum tasks, delete some to create')
-            else state.todos.unshift(todo)
+            else state.todos.push(todo)
         })
     },
 })

@@ -1,6 +1,7 @@
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
 const asyncLocalStorage = require('../../services/als.service')
+const logger = require('../../services/logger.service')
 
 async function query(filterBy = {}) {
     try {
@@ -71,20 +72,45 @@ async function remove(todoId) {
 
 async function add(todo) {
     try {
-        // const todoToAdd = {
-        //     byUserId: ObjectId(todo.byUserId),
-        //     aboutUserId: ObjectId(todo.aboutUserId),
-        //     txt: todo.txt
-        // }
         const todoToAdd = {
             ...todo,
             createdAt: Date.now()
         }
         const collection = await dbService.getCollection('todo')
         await collection.insertOne(todoToAdd)
+        console.log('todoToAdd', todoToAdd);
         return todoToAdd;
     } catch (err) {
         logger.error('cannot insert todo', err)
+        throw err
+    }
+}
+
+async function update(todo) {
+    console.log('todo from update()', todo);
+    try {
+        // peek only updatable fields!
+        const todoToSave = {
+            ...todo,
+            _id: ObjectId(todo._id)
+        }
+        const collection = await dbService.getCollection('todo')
+        await collection.updateOne({ _id: todoToSave._id }, { $set: todoToSave })
+        return todoToSave;
+    } catch (err) {
+        logger.error(`cannot update todo ${todo._id}`, err)
+        throw err
+    }
+}
+
+async function getById(todoId) {
+    try {
+        const collection = await dbService.getCollection('todo')
+        const todo = await collection.findOne({ _id: ObjectId(todoId) })
+
+        return todo
+    } catch (err) {
+        logger.error(`while finding user ${todoId}`, err)
         throw err
     }
 }
@@ -98,7 +124,9 @@ async function add(todo) {
 module.exports = {
     query,
     remove,
-    add
+    add,
+    update,
+    getById
 }
 
 
