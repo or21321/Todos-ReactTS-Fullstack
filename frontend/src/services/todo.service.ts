@@ -2,6 +2,7 @@ import { Todo, Todos } from '../models/Todo.model';
 import { asyncStorageService } from './async-storage.service';
 import { storageService } from './storage.service';
 import { utilService } from './util.service';
+import { httpService } from './http.service';
 
 const TODOS: Todos = [
     {
@@ -93,9 +94,10 @@ async function toggleTodo(id: string) {
     return await save(todo)
 }
 
-function query(): Promise<Todo[] | undefined> {
-    if (!storageService.load(KEY)) storageService.store(KEY, TODOS)
-    return asyncStorageService.query(KEY)
+async function query(): Promise<Todo[] | undefined> {
+    // if (!storageService.load(KEY)) storageService.store(KEY, TODOS)
+    // return asyncStorageService.query(KEY)
+    return await httpService.get('todo/')
 }
 
 function getById(id: string): Promise<Todo | undefined> {
