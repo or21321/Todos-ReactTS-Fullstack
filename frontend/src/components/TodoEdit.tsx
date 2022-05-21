@@ -43,7 +43,7 @@ export default function TodoEdit() {
                         <label>
                             Importance: <input type="range" min="1" max="5" {...register('importance')} /> {todoToEdit.importance}
                         </label>
-                        <button>{title.current}</button>
+                        <button className="btn-submit">{title.current}</button>
                     </form>}
             </section>
         </div>

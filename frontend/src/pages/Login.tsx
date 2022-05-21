@@ -36,10 +36,10 @@ export default function Login() {
     return (
         <main className="login-page main-layout">
             <form onSubmit={onSubmit}>
-                <input placeholder='Username' type="text" {...register('username')} />
-                <input placeholder='Full Name' type="text" {...register('name')} />
-                <input placeholder='Password' type="password" {...register('password')} />
-                <button>Login</button>
+                <input required placeholder='Username' type="text" {...register('username')} />
+                <input pattern="^(\w\w+)\s(\w+)$" required placeholder='Full Name' type="text" {...register('name')} />
+                <input required placeholder='Password' type="password" {...register('password')} />
+                <button className='btn-submit'>Login</button>
             </form>
         </main>
     )

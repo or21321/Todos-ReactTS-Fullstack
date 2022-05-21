@@ -72,13 +72,14 @@ async function remove(todoId) {
 
 async function add(todo) {
     try {
+        const collection = await dbService.getCollection('todo')
+        const todos = await collection.find({}).toArray()
+        if (todos.length >= 10) throw Error('Maximum tasks, delete some to create')
         const todoToAdd = {
             ...todo,
             createdAt: Date.now()
         }
-        const collection = await dbService.getCollection('todo')
         await collection.insertOne(todoToAdd)
-        console.log('todoToAdd', todoToAdd);
         return todoToAdd;
     } catch (err) {
         logger.error('cannot insert todo', err)

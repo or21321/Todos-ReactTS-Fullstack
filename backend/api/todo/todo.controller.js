@@ -43,9 +43,11 @@ async function addTodo(req, res) {
         res.send(todo)
 
     } catch (err) {
-        console.log(err)
         logger.error('Failed to add todo', err)
-        res.status(500).send({ err: 'Failed to add todo' })
+        const regex = new RegExp('Maximum tasks, delete some to create', 'i')
+        console.log(regex.test(err));
+        const errMsg = regex.test(err) ? 'Maximum tasks, delete some to create' : 'Failed to add todo'
+        res.status(500).send({ err: errMsg })
     }
 }
 

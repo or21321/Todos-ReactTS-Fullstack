@@ -2,6 +2,7 @@ export default function ActionsModal({ toggle, onRemoveTodo, onEditTodo }: { tog
 
     return (
         <section
+            onClick={(ev) => ev.stopPropagation()}
             className="menu-popup"
         >
             <div>
@@ -14,8 +15,8 @@ export default function ActionsModal({ toggle, onRemoveTodo, onEditTodo }: { tog
                 </header>
                 <main>
                     <ul>
-                        <button onClick={(ev) => { ev.stopPropagation(); onEditTodo() }}>Edit</button>
-                        <button onClick={(ev) => { ev.stopPropagation(); onRemoveTodo() }}>Remove</button>
+                        <button className="btn-premium" onClick={(ev) => { ev.stopPropagation(); onEditTodo() }}>Edit</button>
+                        <button className="btn-premium" onClick={(ev) => { ev.stopPropagation(); onRemoveTodo() }}>Remove</button>
                     </ul>
                 </main>
             </div >

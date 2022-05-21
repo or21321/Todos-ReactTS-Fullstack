@@ -42,8 +42,7 @@ export const saveTodo = createAsyncThunk(
         try {
             return await todoService.save(todo)
         } catch (err) {
-            console.log(err);
-            toast.warn('Maximum tasks amount is 10 - delete some to create', {
+            toast.warn(err.response.data.err, {
                 position: 'bottom-right'
             })
             throw err

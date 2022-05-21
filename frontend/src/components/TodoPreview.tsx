@@ -14,7 +14,7 @@ export default function TodoPreview({ todo, onToggleTodo, onRemoveTodo, onEditTo
             <span>Task: {todo.content}</span>
             <span>Importance: {todo.importance}</span>  
             <span>Is done: {JSON.stringify(todo.isDone)}</span>
-            <button onClick={(ev) => { ev.stopPropagation(); toggleModal() }}>Actions</button >
+            <button className="btn-premium" onClick={(ev) => { ev.stopPropagation(); toggleModal() }}>Actions</button >
             {isModalOpen && <ActionsModal onEditTodo={() => onEditTodo(todo._id)} onRemoveTodo={() => onRemoveTodo(todo._id)} toggle={toggleModal} />}
         </li >
     )
